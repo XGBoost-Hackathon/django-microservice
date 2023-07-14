@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+   <div>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="upload" multiple>
+        <button type="submit">Upload</button>
+    </form>
+   </div>
+
+   {% for i in f2 %}
+       {{i.id}}
+       <a href="{{ i.file.url }}" target="_blank">{{ i.file }}</a>
+
+       <br>
+
+   {% endfor %}
+
+
+
+</body>
+</html>

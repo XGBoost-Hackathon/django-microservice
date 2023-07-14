@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" consent="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/pdf.css' %} ">
+        <style>
+            #divToExport{
+               
+                padding: 100px 100px;
+    
+                background-image: url('{% static "images/travel.jpg" %}');
+                margin-bottom: 10px;
+                background-size: cover;
+               
+               }
+        </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <div  id="divToExport">
+            <div class="title">
+           <h2>  Book Title:  </h2>
+            </div>
+            
+            <div class="desc">
+             <h2>   Book Description:  </h2>
+            </div>
+
+            <div class="book_text">
+             
+                {% for content, image in content_with_images %}
+                        <p>{{ content }}</p>
+                        <img src="{{ image }}" alt="Image" style="width: 300px; height: 150px; border: 1px solid black; display: block; margin: 0 auto;">
+               {% endfor %}
+            </div>
+
+            <br><br>
+            
+        </div>
+
+        <br><br>
+        <div class="center">
+            <button id="export-button">Export as PDF</button>
+        </div>
+    {% comment %} <script type="text/javascript" src="{% static 'js/generatePdf.js' %}"></script> {% endcomment %}
+
+
+    <script type="text/javascript">
+            const exportButton = document.getElementById('export-button');
+                
+            exportButton.addEventListener('click', () => {
+                var element = document.getElementById('divToExport');
+                const options = {
+                    margin:       0.5,
+                    filename:     'myfile.pdf',
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+                };
+                
+                html2pdf().set(options).from(element).save();
+            });
+
+           
+            
+            
+    </script>
+  </body>
+</html>
